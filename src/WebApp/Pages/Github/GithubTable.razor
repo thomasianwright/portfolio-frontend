@@ -32,13 +32,13 @@
             </MudTd>
         </RowTemplate>
         <PagerContent>
-            <MudTablePager PageSizeOptions="new[] { 5, 10, 15, 20 }"/>
+            <MudTablePager PageSizeOptions="new[] { 5, 10 }"/>
         </PagerContent>
     </MudTable>
 }
 else
 {
-    <SpinKit Type="SpinKitType.Flow"/>
+    <SpinKit Type="SpinKitType.Flow" Centered="true"/>
 }
 
 @code {
