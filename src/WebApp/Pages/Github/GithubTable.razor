@@ -1,0 +1,46 @@
+﻿@using WebApp.Core.Models
+@using WebApp.Core.Repositories
+@if (loaded)
+{
+    <MudTable Items="@_repositories" Hover="true" SortLabel="Sort By">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Repository, object>(x=>x.Name)">Name</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Repository, object>(x=>x.Language)">Language</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Repository, object>(x=>x.ForksCount)">Forks</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Repository, object>(x=>x.StargazersCount)">Stars</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Repository, object>(x=>x.OpenIssuesCount)">Issues</MudTableSortLabel></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Name">@context.Name</MudTd>
+            <MudTd DataLabel="Language">@context.Language</MudTd>
+            <MudTd DataLabel="Forks">@context.ForksCount</MudTd>
+            <MudTd DataLabel="Stars">@context.StargazersCount</MudTd>
+            <MudTd DataLabel="Molar mass">@context.OpenIssuesCount</MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+        </PagerContent>
+    </MudTable>
+
+}
+else
+{
+    <SpinKit Type="SpinKitType.Flow" />
+}
+@code {
+    private IEnumerable<Repository> _repositories { get; set; }
+    private bool loaded { get; set; }
+    
+    [Inject]
+    private IGithubRepository _githubRepository { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _repositories = await _githubRepository.GetRepositories();
+
+        if (_repositories.Any())
+        {
+            loaded = true;
+        }
+    }
+}
