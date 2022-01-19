@@ -1,0 +1,38 @@
+﻿@using WebApp.Core.Models
+@if (IsLeft)
+{
+    <MudTimelineItem Color="_color">
+        <MudText Align="Align.End" Typo="Typo.subtitle1">@JobExperience.CompanyName, @JobExperience.Location</MudText>
+        <MudText Align="Align.End" Typo="Typo.subtitle2">@JobExperience.Position</MudText>
+        <MudText Align="Align.End" Typo="Typo.body2">@JobExperience.StartDateString - @JobExperience.EndDateString</MudText>
+    </MudTimelineItem>
+}
+else
+{
+    <MudTimelineItem Color="_color">
+        <MudText Typo="Typo.subtitle1">@JobExperience.CompanyName, @JobExperience.Location</MudText>
+        <MudText Typo="Typo.subtitle2">@JobExperience.Position</MudText>
+        <MudText Typo="Typo.body2">@JobExperience.StartDateString - @JobExperience.EndDateString</MudText>
+    </MudTimelineItem>
+}
+
+
+
+@code {
+
+    [Parameter]
+    public bool IsLeft { private get; set; }
+
+    [Parameter]
+    public JobExperience JobExperience { private get; set; }
+
+    private Color _color;
+    
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        
+        _color = JobExperience.EndDate == null ? Color.Primary : Color.Default;    
+    }
+
+}

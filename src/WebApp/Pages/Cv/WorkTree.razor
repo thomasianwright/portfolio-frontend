@@ -1,0 +1,47 @@
+﻿@using WebApp.Core.Models
+@if (loaded)
+{
+    <MudItem xs="12">
+        <MudPaper Height="100%" Outlined="true">
+            <MudTimeline>
+                @for (var i = 0; i < Model.Count; i++)
+                {
+                    <WorkTreeItem IsLeft="@(i % 2 == 1)" JobExperience="Model[i]"/>
+                }
+            </MudTimeline>
+        </MudPaper>
+    </MudItem>
+}
+
+
+@code {
+
+    private IList<JobExperience> Model;
+    private bool loaded;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        Model = new List<JobExperience>
+        {
+            new JobExperience
+            {
+                CompanyName = "Raiys",
+                Location = "Warrington",
+                StartDate = DateTime.Parse("01/01/2020"),
+                EndDate = null
+            },
+            new JobExperience
+            {
+                CompanyName = "Caliqon",
+                Location = "Liverpool",
+                StartDate = DateTime.Parse("01/01/2020"),
+                EndDate = DateTime.Now
+            },
+        };
+
+        loaded = true;
+    }
+
+}
