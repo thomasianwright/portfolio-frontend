@@ -1,0 +1,31 @@
+﻿@using WebApp.Core.Models
+<div class="row">
+    <img src="@Model.Author.AvatarUrl" alt="User Avatar">
+    <MudText Style="width: 70%;" Typo="Typo.body1">@Model.Commit.Message</MudText>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ToggleOverlay">More Information</MudButton>
+</div>
+
+<MudOverlay @bind-Visible="isVisible" DarkBackground="true" AutoClose="true">
+    <div class="model">
+        <div>
+            <MudText>Options</MudText>
+        </div>
+        <MudButton Link="@Model.Author.Url">@Model.Author.Login</MudButton>
+        <MudButton Link="@Model.HtmlUrl">Visit Commit History</MudButton>
+    </div>
+</MudOverlay>
+
+@code {
+
+    [Parameter]
+    public GithubCommit Model { get; set; }
+
+    private bool isVisible;
+
+    private void ToggleOverlay()
+    {
+        isVisible = !isVisible;
+        StateHasChanged();
+    }
+
+}

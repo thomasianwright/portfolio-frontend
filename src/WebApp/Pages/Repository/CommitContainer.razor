@@ -1,0 +1,27 @@
+﻿@using WebApp.Core.Repositories
+@using WebApp.Core.Models
+<div class="commit-container">
+    @foreach (var commit in _commits)
+    {
+        <CommitRow Model="@commit"/>
+    }
+</div>
+
+@code {
+
+    [Inject]
+    private IGithubRepository _githubRepository { get; set; }
+
+    private IEnumerable<GithubCommit> _commits;
+
+    [Parameter]
+    public string RepoName { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        _commits = await _githubRepository.GetCommits(RepoName);
+    }
+
+}

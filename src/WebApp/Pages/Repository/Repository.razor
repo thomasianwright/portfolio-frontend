@@ -1,0 +1,11 @@
+﻿@page "/Repository/{repoName}"
+<MudText>Commit History For @RepoName</MudText>
+<MudButton Link="/Github" Color="Color.Info">Go Back</MudButton>
+<CommitContainer RepoName="@RepoName"/>
+
+@code {
+
+    [Parameter]
+    public string RepoName { get; set; }
+
+}
